@@ -6,7 +6,7 @@ export type ValidationRuleMap<Target extends BaseTarget> = {
 };
 
 // A function which will only execute if validations have passed
-interface FunctionWithValidations<Target, Result = any> extends Function {
+export interface FunctionWithValidations<Target, Result = any> extends Function {
   rules: ValidationRuleMap<Target>;
   (arg: Target): Result;
 }

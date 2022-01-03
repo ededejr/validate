@@ -1,23 +1,72 @@
 # Validate
 
-> Totally unnecessary but fun. 
+> Totally unnecessary but curiosity. 
 
 An experimental POC for validating function parameters before execution.
 
-This idea came about while working on a React project which was driven via a remote server using socket.io. 
-
-Function requests would be sent down with parameters and they would be executed in the browser. To prevent malicious payloads from executing, this would secure local functions by ensuring their parameters always passed custom validations.
+This idea was inspired by a React project from a few years ago which was driven via a remote server using Socket.io. Instructions could be sent down with parameters and to be executed in the browser. To prevent malicious payloads from executing, `validate` would secure local functions by ensuring their parameters always passed validations.
 
 ## Examples
 
-### Using built in validators
+### Validating an object's shape
 ```ts
-import { ValidatedFunctions, Validators, ValidationRuleMap } from '@dxede/validate';
+import { validate } from '@ededejr/validate';
 
-// Writing a wrapper for demonstration purposes
-function createValidatedCopy<Target, Result>(f: (p: Target) => Result, rules: ValidationRuleMap<Target>) {
-  return ValidatedFunctions.create<Target, Result>(rules, f);
+interface Person {
+  name: string;
+  age: number;
 }
+
+const validatePerson = createObjectValidator<Person>();
+
+const isPerson = validate(
+  { name: 'Cole', age: 1 }.
+  {
+    name: Validators.string,
+    age: (number) => number > 0
+  }
+) // true;
+```
+
+### Reusing ValidationRuleMaps
+```ts
+import { createObjectValidator } from '@ededejr/validate';
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+const validatePerson = createObjectValidator<Person>({
+  name: Validators.string,
+  age: (number) => number > 0
+});
+
+const isPerson = validatePerson({ name: 'Cole', age: 1 }) // true;
+```
+
+### Validating Functions
+
+There's really no restriction on how you validate, as long as your validation function returns a boolean. This also makes it easy to validate nested objects.
+
+```ts
+import { createValidatedFunction, Validators } from '@ededejr/validate';
+
+const print = createValidatedFunction<Coordinates, ReturnType<typeof _print>>(
+  _print, 
+  { 
+    x: (x) => x%2 === 0, 
+    y: (y) => `${y}`.includes('1') 
+  }
+);
+
+print({ x: 9, y: 10 }) // Error, 9%2 is not 0
+print({ x: 6, y: 22 }) // Error, 22 as a string does not contain "1"
+```
+
+### Validating functions with provided Validators
+```ts
+import { createValidatedFunction, Validators } from '@ededejr/validate';
 
 // Set up our scenario, in this case we'll work with simple coordinates
 type Coordinates = { x: number, y: number };
@@ -27,20 +76,54 @@ type CoordinateOperator<Result = number> = (c: Coordinates) => Result;
 const _print: CoordinateOperator<string> = ({ x, y }) => `(${x}, ${y})`;
 
 // Create a validated copy of print
-const print = createValidatedCopy<Coordinates, ReturnType<typeof _print>>(print, { x: Validators.number, y: Validators.number  });
+const print = createValidatedFunction<Coordinates, ReturnType<typeof _print>>(
+  _print, 
+  { 
+    x: Validators.number, 
+    y: Validators.number  
+  }
+);
 
 // Now we can use print
 print({ x: 9, y: 10 }) // Success
 print({ x: 9, y: '10' }) // Error
 ```
 
-### Using custom validators
+### Validating Nested Objects
 
-There's really no restriction on how you validate, as long as your validation function returns a boolean. This also makes it easy to validate nested objects.
+You can specify how deep your validations could go, even within Objects!
 
 ```ts
-const print = createValidatedCopy<Coordinates, ReturnType<typeof _print>>(print, { x: (x) => x%2 === 0, y: (y) => `${y}`.includes('1')  });
+import { createValidatedFunction, createObjectValidator, Validators } from '@ededejr/validate';
 
-print({ x: 9, y: 10 }) // Error, 9%2 is not 0
-print({ x: 6, y: 22 }) // Error, 22 as a string does not contain "1"
+// Bringing back coordinates
+type Coordinate = { x: number, y: number };
+type CoordinateOperator<Result = number> = (c: Coordinate) => Result;
+
+// Let's create a line type
+type Line = { start: Coordinate, end: Coordinate };
+
+// Create a coordinate validator that ensures a coordinate is always valid
+const coordinateValidator = createObjectValidator({ 
+  x: Validators.number, 
+  y: Validators.number 
+});
+
+// Create a distance function that measures the distance between two coordinates
+const _distance = ({ start, end }: Line) => Math.sqrt( 
+  (start.x - end.x)*(start.x - end.x) * (start.y - end.y)*(start.y - end.y) 
+);
+
+// Created a validated version of distance
+const distance = createValidatedFunction<Line, number>(
+  _distance, 
+  { 
+    start: coordinateValidator,
+    end: coordinateValidator 
+  }
+);
+
+// Now we can use the validated distance
+distance({ start: { x: 10, y: 25 }, end: { x: 50, y: 40 } }) // Success
+distance({ start: { x: 10, y: 25 }, end: { x: '50', y: '40' } }) // Error
 ```

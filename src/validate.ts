@@ -1,19 +1,12 @@
 import { BaseTarget, ValidationRuleMap } from "./types";
 
-export const Validators = Object.freeze({
-  string: (arg: any) => typeof arg === 'string',
-  number: (arg: any) => typeof arg === 'number',
-  object: (arg: any) => Object(arg) === arg,
-  array: (arg: any) => Array.isArray(arg),
-});
-
 /**
  * Validate a target with a ValidationRuleMap
  * @param rules 
  * @param target 
  * @returns 
  */
-export function validate<
+export default function validate<
   Target extends BaseTarget, 
   RuleType extends ValidationRuleMap<Target>
 >(rules: RuleType, target: Target) {
@@ -21,10 +14,10 @@ export function validate<
 }
 
 /**
- * Create a validator for a ValidationRuleMap
+ * Create a validator from a ValidationRuleMap
  * @param rules 
  * @returns 
  */
-export function createValidator<Target>(rules: ValidationRuleMap<Target>) {
+export function createObjectValidator<Target>(rules: ValidationRuleMap<Target>) {
   return (target: Target) => validate<Target, ValidationRuleMap<Target>>(rules, target);
 }

@@ -1,16 +1,14 @@
 import { FunctionWithValidations, ValidationRuleMap } from "./types";
-import { createValidator } from "./validate";
+import { createObjectValidator } from "./validate";
 
 export default class ValidatedFunction<Target, Result = any> {
   rules: ValidationRuleMap<Target>;
   private validator: (t: Target) => Boolean;
   private executor: (arg: Target) => Result;
 
-  static create = createValidatedFunction;
-
   constructor(rules: ValidationRuleMap<Target>,  func: (arg: Target) => Result) {
     this.rules = rules;
-    this.validator = createValidator<Target>(rules);
+    this.validator = createObjectValidator<Target>(rules);
     this.executor = func;
   }
 
@@ -21,19 +19,15 @@ export default class ValidatedFunction<Target, Result = any> {
       throw new Error(`Failed validation for "${this.executor.name}", with ${JSON.stringify(arg)}`);
     }
   }
-}
 
-function createValidatedFunction<Target, Result = any>(
-  rules: ValidationRuleMap<Target>,  
-  func: (arg: Target) => Result
-): FunctionWithValidations<Target, Result> {
-
-  const executor = new ValidatedFunction<Target, Result>(rules, func);
+  static create<Target, Result = any>(
+    func: (arg: Target) => Result,
+    rules: ValidationRuleMap<Target>,
+  ): FunctionWithValidations<Target, Result> {
   
-  const f: FunctionWithValidations<Target, Result> = (arg: Target) => {
-    return executor.execute(arg);
+    const executor = new ValidatedFunction<Target, Result>(rules, func);
+    const f: FunctionWithValidations<Target, Result> = (arg: Target) => executor.execute(arg);
+    f.rules = executor.rules;
+    return f;
   }
-  f.rules = executor.rules;
-
-  return f;
 }
