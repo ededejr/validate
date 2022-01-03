@@ -1,4 +1,4 @@
-import { FunctionWithValidations, ValidationRuleMap } from "./types";
+import { ValidationRuleMap } from "./types";
 import { createObjectValidator } from "./validate";
 
 export default class ValidatedFunction<Target, Result = any> {
@@ -30,4 +30,12 @@ export default class ValidatedFunction<Target, Result = any> {
     f.rules = executor.rules;
     return f;
   }
+}
+
+/**
+ * A function which will only execute if validations have passed
+ */
+interface FunctionWithValidations<Target, Result = any> extends Function {
+  rules: ValidationRuleMap<Target>;
+  (arg: Target): Result;
 }
