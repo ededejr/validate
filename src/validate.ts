@@ -1,4 +1,4 @@
-import { BaseTarget, ValidationRuleMap } from "./types";
+import { BaseTarget, ValidationRuleMap } from './types';
 
 /**
  * Validate a target with a ValidationRuleMap
@@ -9,7 +9,7 @@ import { BaseTarget, ValidationRuleMap } from "./types";
 export default function validate<
   Target extends BaseTarget, 
   RuleType extends ValidationRuleMap<Target>
->(rules: RuleType, target: Target) {
+>(rules: RuleType, target: Target): boolean {
   return Object.keys(target).every(property => rules[property](target[property]));
 }
 
@@ -19,5 +19,5 @@ export default function validate<
  * @returns 
  */
 export function createObjectValidator<Target>(rules: ValidationRuleMap<Target>) {
-  return (target: Target) => validate<Target, ValidationRuleMap<Target>>(rules, target);
+  return (target: Target): boolean => validate<Target, ValidationRuleMap<Target>>(rules, target);
 }

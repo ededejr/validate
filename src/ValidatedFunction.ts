@@ -1,9 +1,9 @@
-import { ValidationRuleMap } from "./types";
-import { createObjectValidator } from "./validate";
+import { ValidationRuleMap } from './types';
+import { createObjectValidator } from './validate';
 
-export default class ValidatedFunction<Target, Result = any> {
+export default class ValidatedFunction<Target, Result = unknown> {
   rules: ValidationRuleMap<Target>;
-  private validator: (t: Target) => Boolean;
+  private validator: (t: Target) => boolean;
   private executor: (arg: Target) => Result;
 
   constructor(rules: ValidationRuleMap<Target>,  func: (arg: Target) => Result) {
@@ -12,7 +12,7 @@ export default class ValidatedFunction<Target, Result = any> {
     this.executor = func;
   }
 
-  execute(arg: Target) {
+  execute(arg: Target): Result {
     if (this.validator(arg)) {
       return this.executor(arg);
     } else {
@@ -20,7 +20,7 @@ export default class ValidatedFunction<Target, Result = any> {
     }
   }
 
-  static create<Target, Result = any>(
+  static create<Target, Result = unknown>(
     func: (arg: Target) => Result,
     rules: ValidationRuleMap<Target>,
   ): FunctionWithValidations<Target, Result> {
@@ -35,7 +35,7 @@ export default class ValidatedFunction<Target, Result = any> {
 /**
  * A function which will only execute if validations have passed
  */
-interface FunctionWithValidations<Target, Result = any> extends Function {
+interface FunctionWithValidations<Target, Result = unknown> extends Function {
   rules: ValidationRuleMap<Target>;
   (arg: Target): Result;
 }

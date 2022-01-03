@@ -1,7 +1,7 @@
-import validate, { createObjectValidator } from "./validate";
-import ValidatedFunction from "./ValidatedFunction";
-import Validators from "./validators";
-import { ValidationRuleMap } from "./types";
+import ValidatedFunction from './ValidatedFunction';
+import { ValidationRuleMap } from './types';
+import Validators from './validators';
+import validate, { createObjectValidator } from './validate';
 
 const createValidatedFunction = ValidatedFunction.create;
 
@@ -11,4 +11,4 @@ export {
   ValidationRuleMap,
   createValidatedFunction,
   createObjectValidator
-}
+};
