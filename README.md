@@ -52,6 +52,13 @@ There's really no restriction on how you validate, as long as your validation fu
 ```ts
 import { createValidatedFunction, Validators } from '@ededejr/validate';
 
+// Set up our scenario, in this case we'll work with simple coordinates
+type Coordinates = { x: number, y: number };
+type CoordinateOperator<Result = number> = (c: Coordinates) => Result;
+
+// Write a function to print coordinates
+const _print: CoordinateOperator<string> = ({ x, y }) => `(${x}, ${y})`;
+
 const print = createValidatedFunction<Coordinates, ReturnType<typeof _print>>(
   _print, 
   { 
