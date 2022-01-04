@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:install": "cd .test && npm install ../build",
     "release": "release-it --ci"
   },
   "repository": {
