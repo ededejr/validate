@@ -41,7 +41,7 @@ const validatePerson = createObjectValidator<Person>({
 const isPerson = validatePerson({ name: 'Cole', age: 1 }) // true;
 ```
 
-### Validating Functions
+### Validated Functions
 
 There's really no restriction on how you validate, as long as your validation function returns a boolean. This also makes it easy to validate nested objects.
 
@@ -67,7 +67,7 @@ print({ x: 9, y: 10 }) // Error, 9%2 is not 0
 print({ x: 6, y: 22 }) // Error, 22 as a string does not contain "1"
 ```
 
-### Validating functions with provided Validators
+### Validated functions with provided Validators
 ```ts
 import { createValidatedFunction, Validators } from '@ededejr/validate';
 
