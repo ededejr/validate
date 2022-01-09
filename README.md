@@ -15,8 +15,6 @@ interface Person {
   age: number;
 }
 
-const validatePerson = createObjectValidator<Person>();
-
 const isPerson = validate(
   { name: 'Cole', age: 1 }.
   {
