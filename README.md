@@ -1,8 +1,6 @@
 # Validate
 
-> Totally unnecessary but curiosity. 
-
-An experimental POC for validating function parameters before execution.
+> An experimental POC for validating function parameters before execution.
 
 This idea was inspired by a React project from a few years ago which was driven via a remote server using Socket.io. Instructions could be sent down with parameters and to be executed in the browser. To prevent malicious payloads from executing, `validate` would secure local functions by ensuring their parameters always passed validations.
 
