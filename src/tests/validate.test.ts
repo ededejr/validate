@@ -3,7 +3,7 @@ import validate, { createObjectValidator } from '../validate';
 describe('Validate', () => {
 	test('validates a given object', () => {
 		expect(
-			validate({ a: (a: string) => a.includes('a') }, { a: 'abcde' })
+			validate({ a: 'abcde' }, { a: (a: string) => a.includes('a') })
 		).toBe(true);
 	});
 
@@ -11,20 +11,20 @@ describe('Validate', () => {
 		expect(
 			validate(
 				{
-					a: (a) => a.name.includes('a') && a.age > 5,
-				},
-				{
 					a: {
 						age: 10,
 						name: 'abcde',
 					},
+				},
+				{
+					a: (a) => a.name.includes('a') && a.age > 5,
 				}
 			)
 		).toBe(true);
 	});
 
 	test('fails a given object', () => {
-		expect(validate({ a: (a) => a.includes('z') }, { a: 'abcde' })).toBe(false);
+		expect(validate({ a: 'abcde' }, { a: (a) => a.includes('z') })).toBe(false);
 	});
 });
 

@@ -25,19 +25,14 @@ npm install @ededejr/validate
 ```ts
 import { validate } from '@ededejr/validate';
 
-interface Person {
-	name: string;
-	age: number;
-}
-
-const isPerson = validate(
+const isValid = validate(
 	{
-		name: Validators.string,
-		age: (number) => number > 0,
+		name: 'Edede',
+		handle: '@ededejr',
 	},
 	{
-		name: 'Cole',
-		age: 1,
+		name: (name) => name.length === 5,
+		handle: (handle) => handle.startsWith('@'),
 	}
 ); // true;
 ```
