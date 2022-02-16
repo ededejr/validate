@@ -6,11 +6,15 @@
   "scripts": {
     "build": "tsc",
     "build:candidate": "tsc -p tsconfig.prod.json",
+    "copy:meta": "cp package.json build/package.json && cp README.md build/README.md && cp LICENSE build/LICENSE",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:install": "cd .test && npm install ../build",
-    "release": "release-it --ci"
+    "release": "release-it --ci",
+    "release:minor": "release-it --ci --minor",
+    "release:major": "release-it --ci --major"
   },
   "repository": {
     "type": "git",
