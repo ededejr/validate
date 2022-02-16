@@ -1,10 +1,8 @@
 # Validate
 
-> An experimental POC for validating function parameters before execution.
+With an increase in my adoption of event driven architectures, `validate` is an experimental module for validating event payloads sent through message brokers. However, in theory it could be used for much more than that.
 
-This idea was inspired by a React project from a few years ago which was driven via a remote server using Socket.io. Instructions could be sent down with parameters and to be executed in the browser. To prevent malicious payloads from executing, `validate` would secure local functions by ensuring their parameters always passed validations.
-
-## Examples
+## Usage
 
 ### Validating an object's shape
 ```ts
