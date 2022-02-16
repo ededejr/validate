@@ -15,7 +15,7 @@ export default class ValidatedFunction<
 		this.executor = func;
 	}
 
-	execute(arg: Target): Result {
+	protected execute(arg: Target): Result {
 		if (this.validator(arg)) {
 			return this.executor(arg);
 		} else {
