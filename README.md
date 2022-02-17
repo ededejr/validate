@@ -57,8 +57,6 @@ const isPerson = validatePerson({ name: 'Cole', age: 1 }); // true;
 
 ### Validated Functions
 
-There's really no restriction on how you validate, as long as your validation function returns a boolean. This also makes it easy to validate nested objects.
-
 ```ts
 import { createValidatedFunction, Validators } from '@ededejr/validate';
 
