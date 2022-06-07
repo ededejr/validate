@@ -26,14 +26,14 @@ npm install @ededejr/validate
 import { validate } from '@ededejr/validate';
 
 const isValid = validate(
-	{
-		name: 'Edede',
-		handle: '@ededejr',
-	},
-	{
-		name: (name) => name.length === 5,
-		handle: (handle) => handle.startsWith('@'),
-	}
+  {
+    name: 'Edede',
+    handle: '@ededejr',
+  },
+  {
+    name: (name) => name.length === 5,
+    handle: (handle) => handle.startsWith('@'),
+  }
 ); // true;
 ```
 
@@ -43,13 +43,13 @@ const isValid = validate(
 import { createObjectValidator } from '@ededejr/validate';
 
 interface Person {
-	name: string;
-	age: number;
+  name: string;
+  age: number;
 }
 
 const validatePerson = createObjectValidator<Person>({
-	name: Validators.string,
-	age: (number) => number > 0,
+  name: Validators.string,
+  age: (number) => number > 0,
 });
 
 const isPerson = validatePerson({ name: 'Cole', age: 1 }); // true;
@@ -68,11 +68,11 @@ type CoordinateOperator<Result = number> = (c: Coordinates) => Result;
 const _print: CoordinateOperator<string> = ({ x, y }) => `(${x}, ${y})`;
 
 const print = createValidatedFunction<Coordinates, ReturnType<typeof _print>>(
-	_print,
-	{
-		x: (x) => x % 2 === 0,
-		y: (y) => `${y}`.includes('1'),
-	}
+  _print,
+  {
+    x: (x) => x % 2 === 0,
+    y: (y) => `${y}`.includes('1'),
+  }
 );
 
 print({ x: 9, y: 10 }); // Error, 9%2 is not 0
@@ -93,11 +93,11 @@ const _print: CoordinateOperator<string> = ({ x, y }) => `(${x}, ${y})`;
 
 // Create a validated copy of print
 const print = createValidatedFunction<Coordinates, ReturnType<typeof _print>>(
-	_print,
-	{
-		x: Validators.number,
-		y: Validators.number,
-	}
+  _print,
+  {
+    x: Validators.number,
+    y: Validators.number,
+  }
 );
 
 // Now we can use print
@@ -111,9 +111,9 @@ You can specify how deep your validations could go, even within Objects!
 
 ```ts
 import {
-	createValidatedFunction,
-	createObjectValidator,
-	Validators,
+  createValidatedFunction,
+  createObjectValidator,
+  Validators,
 } from '@ededejr/validate';
 
 // Bringing back coordinates
@@ -125,23 +125,26 @@ type Line = { start: Coordinate; end: Coordinate };
 
 // Create a coordinate validator that ensures a coordinate is always valid
 const coordinateValidator = createObjectValidator<Coordinate>({
-	x: Validators.number,
-	y: Validators.number,
+  x: Validators.number,
+  y: Validators.number,
 });
 
 // Create a distance function that measures the distance between two coordinates
 const _distance = ({ start, end }: Line) =>
-	Math.sqrt(
-		(start.x - end.x) * (start.x - end.x) * (start.y - end.y) * (start.y - end.y)
-	);
+  Math.sqrt(
+    (start.x - end.x) *
+      (start.x - end.x) *
+      (start.y - end.y) *
+      (start.y - end.y)
+  );
 
 // Created a validated version of distance
 const distance = createValidatedFunction<Line, ReturnType<typeof _distance>>(
-	_distance,
-	{
-		start: coordinateValidator,
-		end: coordinateValidator,
-	}
+  _distance,
+  {
+    start: coordinateValidator,
+    end: coordinateValidator,
+  }
 );
 
 // Now we can use the validated distance

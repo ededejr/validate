@@ -6,9 +6,9 @@ import validate, { createObjectValidator } from './validate';
 const createValidatedFunction = ValidatedFunction.create;
 
 export {
-	validate,
-	Validators,
-	ValidationRuleMap,
-	createValidatedFunction,
-	createObjectValidator,
+  validate,
+  Validators,
+  ValidationRuleMap,
+  createValidatedFunction,
+  createObjectValidator,
 };

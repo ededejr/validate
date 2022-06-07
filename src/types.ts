@@ -12,5 +12,5 @@ export type ValidationFunction<T = unknown> = (arg: T) => boolean;
  * A collection of validation functions.
  */
 export type ValidationRuleMap<Target> = {
-	[Property in keyof Target]: ValidationFunction<Target[Property]>;
+  [Property in keyof Target]: ValidationFunction<Target[Property]>;
 };

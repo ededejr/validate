@@ -7,12 +7,12 @@ import { BaseTarget, ValidationRuleMap } from './types';
  * @returns
  */
 export default function validate<Target extends BaseTarget>(
-	target: Target,
-	rules: ValidationRuleMap<Target>
+  target: Target,
+  rules: ValidationRuleMap<Target>
 ): boolean {
-	return Object.keys(target).every((property) =>
-		rules[property](target[property] as Target[typeof property])
-	);
+  return Object.keys(target).every((property) =>
+    rules[property](target[property] as Target[typeof property])
+  );
 }
 
 /**
@@ -21,7 +21,7 @@ export default function validate<Target extends BaseTarget>(
  * @returns
  */
 export function createObjectValidator<Target extends BaseTarget>(
-	rules: ValidationRuleMap<Target>
+  rules: ValidationRuleMap<Target>
 ) {
-	return (target: Target): boolean => validate<Target>(target, rules);
+  return (target: Target): boolean => validate<Target>(target, rules);
 }
