@@ -2,9 +2,9 @@ import validate, { createObjectValidator } from '../validate';
 
 describe('Validate', () => {
 	test('validates a given object', () => {
-		expect(
-			validate({ a: 'abcde' }, { a: (a: string) => a.includes('a') })
-		).toBe(true);
+		expect(validate({ a: 'abcde' }, { a: (a: string) => a.includes('a') })).toBe(
+			true
+		);
 	});
 
 	test('validates a nested object', () => {

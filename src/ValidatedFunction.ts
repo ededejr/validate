@@ -20,9 +20,7 @@ export default class ValidatedFunction<
 			return this.executor(arg);
 		} else {
 			throw new Error(
-				`Failed validation for "${this.executor.name}", with ${JSON.stringify(
-					arg
-				)}`
+				`Failed validation for "${this.executor.name}", with ${JSON.stringify(arg)}`
 			);
 		}
 	}

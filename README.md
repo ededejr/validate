@@ -132,10 +132,7 @@ const coordinateValidator = createObjectValidator<Coordinate>({
 // Create a distance function that measures the distance between two coordinates
 const _distance = ({ start, end }: Line) =>
 	Math.sqrt(
-		(start.x - end.x) *
-			(start.x - end.x) *
-			(start.y - end.y) *
-			(start.y - end.y)
+		(start.x - end.x) * (start.x - end.x) * (start.y - end.y) * (start.y - end.y)
 	);
 
 // Created a validated version of distance

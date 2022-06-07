@@ -7,8 +7,8 @@
 		"build": "tsc",
 		"build:candidate": "tsc -p tsconfig.prod.json",
 		"copy:meta": "cp package.json build/package.json && cp README.md build/README.md && cp LICENSE build/LICENSE",
-		"lint": "eslint",
-		"lint:fix": "eslint --fix",
+		"lint": "prettier --write '**/*.{ts,json,md}'",
+		"lint:check": "prettier --check '**/*.{ts,json,md}'",
 		"test": "jest",
 		"test:watch": "jest --watch",
 		"test:install": "cd .test && npm install ../build",
@@ -33,6 +33,7 @@
 		"@typescript-eslint/parser": "^4.28.0",
 		"eslint": "^7.29.0",
 		"jest": "^27.4.5",
+		"prettier": "^2.6.2",
 		"release-it": "^14.10.0",
 		"ts-jest": "^27.1.2",
 		"typescript": "^4.5.4"
