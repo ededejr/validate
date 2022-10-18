@@ -1,3 +1,11 @@
+# [0.3.0](https://github.com/ededejr/validate/compare/0.2.0...0.3.0) (2022-10-18)
+
+
+### Features
+
+* extend BaseTarget to match POJO definition ([b14a9e1](https://github.com/ededejr/validate/commit/b14a9e1fea25394a13d9efc3a7af57b946fd2493))
+* Validators.optional for optional fields ([1e75642](https://github.com/ededejr/validate/commit/1e75642c89c228d8f05ef65cd833725fa5d14afa))
+
 # [0.2.0](https://github.com/ededejr/validate/compare/0.1.0...0.2.0) (2022-10-18)
 
 
