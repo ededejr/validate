@@ -1,7 +1,7 @@
 /**
  * An Object which should be validated
  */
-export type BaseTarget = Record<string, unknown>;
+export type BaseTarget = Record<string | number | symbol, unknown>;
 
 /**
  * A function which tests if a given parameter is valid.
