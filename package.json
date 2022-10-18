@@ -47,7 +47,7 @@
       "tagAnnotation": "Release v${version}"
     },
     "npm": {
-      "publish": false,
+      "publish": true,
       "publishPath": "build"
     },
     "plugins": {
@@ -66,6 +66,7 @@
     }
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
   }
 }

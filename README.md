@@ -1,18 +1,8 @@
 # Validate
 
-With an increase in my adoption of event driven architectures, `validate` is an experimental module for validating event payloads sent through message brokers. However, in theory it could be used for much more than that.
+`validate` is an experimental module for validating pojos.
 
 ## Installation
-
-This is hosted using Github packages, which means you may have to include an `.npmrc` file.
-
-In your `.npmrc` file include the following:
-
-```
-@ededejr:registry=https://npm.pkg.github.com/ededejr
-```
-
-Afterwards, you can now install using `npm`:
 
 ```
 npm install @ededejr/validate
