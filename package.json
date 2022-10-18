@@ -15,7 +15,7 @@
     "release": "release-it --ci",
     "release:minor": "release-it --ci --minor",
     "release:major": "release-it --ci --major",
-    "release:patch": "release-it --ci --patch"
+    "release:patch": "release-it --patch"
   },
   "repository": {
     "type": "git",
