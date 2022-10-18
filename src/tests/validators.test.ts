@@ -56,4 +56,20 @@ describe('Validators', () => {
       ).toBe(false);
     });
   });
+
+  describe('boolean', () => {
+    test('Can validate an boolean type', () => {
+      expect(Validators.boolean(true)).toBe(true);
+    });
+
+    test('Fails non-boolean types', () => {
+      expect(Validators.boolean({})).toBe(false);
+      expect(Validators.boolean([])).toBe(false);
+      expect(
+        Validators.boolean(() => {
+          return;
+        })
+      ).toBe(false);
+    });
+  });
 });
