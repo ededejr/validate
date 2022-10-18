@@ -47,8 +47,8 @@
       "tagAnnotation": "Release v${version}"
     },
     "npm": {
-      "publish": true,
-      "publishPath": "build"
+      "publish": false,
+      "publishPath": "./build"
     },
     "plugins": {
       "@release-it/conventional-changelog": {
@@ -59,9 +59,9 @@
     "hooks": {
       "before:init": [
         "npm run test",
-        "npm run build:candidate"
+        "npm run build:candidate",
+        "npm run copy:meta"
       ],
-      "after:git:release": "npm run copy:meta",
       "after:release": "npm publish ./build"
     }
   },
