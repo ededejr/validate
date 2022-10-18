@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/ededejr/validate/compare/0.1.0...0.2.0) (2022-10-18)
+
+
+### Features
+
+* provide boolean validator ([0c4e88f](https://github.com/ededejr/validate/commit/0c4e88ff1bb071fbfd221a331620ab0f125f0afa))
+
 # 0.1.0 (2022-02-16)
 
 ### Features
