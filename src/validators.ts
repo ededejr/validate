@@ -10,6 +10,8 @@ const Validators = Object.freeze({
     !Array.isArray(arg) &&
     arg !== null &&
     typeof arg !== 'function',
+  optional: (validatorFn: (arg: unknown) => boolean) => (arg: unknown) =>
+    arg ? validatorFn(arg) : true,
   string: (arg: unknown) => typeof arg === 'string',
 });
 

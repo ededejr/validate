@@ -72,4 +72,21 @@ describe('Validators', () => {
       ).toBe(false);
     });
   });
+
+  describe('optional', () => {
+    test('Can validate an optional type', () => {
+      expect(Validators.optional(Validators.string)('string')).toBe(true);
+      expect(Validators.optional(Validators.string)(undefined)).toBe(true);
+    });
+
+    test('Fails non-optional types', () => {
+      expect(Validators.optional(Validators.string)({})).toBe(false);
+      expect(Validators.optional(Validators.string)([])).toBe(false);
+      expect(
+        Validators.optional(Validators.string)(() => {
+          return;
+        })
+      ).toBe(false);
+    });
+  });
 });
