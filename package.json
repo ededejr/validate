@@ -1,6 +1,6 @@
 {
   "name": "@ededejr/validate",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "A utility for Validating Objects.",
   "main": "index.js",
   "scripts": {
@@ -59,9 +59,9 @@
     "hooks": {
       "before:init": [
         "npm run test",
-        "npm run build:candidate",
-        "npm run copy:meta"
+        "npm run build:candidate"
       ],
+      "after:git:release": "npm run copy:meta",
       "after:release": "npm publish ./build"
     }
   },
