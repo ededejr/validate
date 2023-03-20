@@ -206,4 +206,42 @@ describe('Validators', () => {
       ).toBe(false);
     });
   });
+
+  describe.only('chain', () => {
+    test('validates a chain', () => {
+      const validator = Validators.chainable()
+        .chain(Validators.string)
+        .chain(Validators.pattern(/[a-z]+@gmail.com$/i));
+      expect(validator('edede@gmail.com')).toBe(true);
+    });
+
+    test('validates a chain with typed params', () => {
+      const validator = Validators.chainable()
+        .chain(Validators.string)
+        // at this point I know it's a string
+        .chain<string>((v) => v.length > 10)
+        .chain(
+          Validators.pattern(
+            /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/i
+          )
+        )
+        .chain(Validators.date);
+
+      expect(validator('2020-01-01T00:00:00Z')).toBe(true);
+      expect(validator('2020-01-01T00:00:00')).toBe(false);
+    });
+
+    test('complex types', () => {
+      const validator = Validators.chainable()
+        .chain(Validators.arrayOf(Validators.number))
+        // at this point I know it's a string
+        .chain<number[]>((v) => v.length > 2)
+        .chain<number[]>((v) => v.every((n) => n % 2 === 0));
+
+      expect(validator(['string', 'string', 'string', 1, 2, 3])).toBe(false);
+      expect(validator(['string', 'string', 1, 2])).toBe(false);
+      expect(validator([1, 2, 3])).toBe(false);
+      expect(validator([2, 4, 6])).toBe(true);
+    });
+  });
 });

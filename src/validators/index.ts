@@ -1,3 +1,6 @@
+import { ValidationChain } from './validation-chain';
+import { TypedValidator, ValidatorOp } from './types';
+
 /**
  * Ensure a given argument is an array using `Array.isArray`.
  */
@@ -116,9 +119,32 @@ export const combine: ValidatorOp =
 export const optional: ValidatorOp = (validatorFn) => (arg) =>
   nullish(arg) ? true : validatorFn(arg);
 
-type Validator = (arg: unknown) => boolean;
-type TypedValidator<T = unknown> = (arg: unknown) => arg is T;
-
-type ValidatorOp = (
-  ...validatorFn: (Validator | TypedValidator)[]
-) => Validator;
+/**
+ * Creates a chainable structure for running multiple validations
+ * in series. In contrast to the {@link combine} function which
+ * combines all inputs with `&&`, this function will bail out
+ * on the first failure.
+ *
+ * @example
+ * A simple chain to verify a string is a date.
+ * ```ts
+ * const isValidDateString = Validators.chainable()
+ *  .chain(Validators.string)
+ *  .chain(Validators.date);
+ *
+ * const isValidDate = isValidDateString('2021-01-01'); // true
+ * ```
+ *
+ * @example
+ * Dealing with complex types is also supported via Generics.
+ *
+ * ```ts
+ * const isValidUser = Validators.chainable()
+ *  .chain(Validators.object)
+ *  .chain<Record<string, unknown>>(obj => obj.hasOwnProperty('name'))
+ *  .chain<{ name: string }>(({ name }) => Validators.pattern(/^[a-z]+$/i)(name))
+ * ```
+ */
+export function chainable() {
+  return new ValidationChain();
+}
