@@ -1,4 +1,4 @@
-import Validators from '../validators';
+import * as Validators from '../validators';
 
 describe('Validators', () => {
   describe('array', () => {
@@ -87,6 +87,49 @@ describe('Validators', () => {
           return;
         })
       ).toBe(false);
+    });
+  });
+
+  describe('combine', () => {
+    test('Can validate an combined type', () => {
+      expect(
+        Validators.combine(Validators.string, Validators.number)('string')
+      ).toBe(false);
+      expect(Validators.combine(Validators.string, Validators.number)(1)).toBe(
+        false
+      );
+
+      expect(
+        Validators.combine(Validators.number, Validators.integer)(10)
+      ).toBe(true);
+    });
+
+    test('Fails non-combined types', () => {
+      expect(Validators.combine(Validators.string, Validators.number)({})).toBe(
+        false
+      );
+      expect(Validators.combine(Validators.string, Validators.number)([])).toBe(
+        false
+      );
+      expect(
+        Validators.combine(
+          Validators.string,
+          Validators.number
+        )(() => {
+          return;
+        })
+      ).toBe(false);
+    });
+  });
+
+  describe('integer', () => {
+    test('Can validate an integer type', () => {
+      expect(Validators.integer(1)).toBe(true);
+    });
+
+    test('Fails non-integer types', () => {
+      expect(Validators.integer(1.1)).toBe(false);
+      expect(Validators.integer('1')).toBe(false);
     });
   });
 });
