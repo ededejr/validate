@@ -1,3 +1,12 @@
+
+
+# [0.4.0](https://github.com/ededejr/validate/compare/0.3.0...0.4.0) (2023-03-20)
+
+
+### Features
+
+* new validators and comments ([a103e5a](https://github.com/ededejr/validate/commit/a103e5ae803809b3ea7d27cb4bcb92f0f32be0d8))
+
 # [0.3.0](https://github.com/ededejr/validate/compare/0.2.0...0.3.0) (2022-10-18)
 
 
