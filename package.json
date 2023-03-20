@@ -1,20 +1,20 @@
 {
   "name": "@ededejr/validate",
   "version": "0.3.0",
-  "description": "A utility for Validating Objects.",
+  "description": "A utility for validating plain objects.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "build:candidate": "tsc -p tsconfig.prod.json",
+    "build": "rm -rf build && tsc",
+    "build:candidate": "rm -rf build && tsc -p tsconfig.prod.json",
     "copy:meta": "cp package.json build/package.json && cp README.md build/README.md && cp LICENSE build/LICENSE",
     "lint": "prettier --write '**/*.{ts,json,md}'",
     "lint:check": "prettier --check '**/*.{ts,json,md}'",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:install": "cd .test && npm install ../build",
-    "release": "release-it --ci",
-    "release:minor": "release-it --ci --minor",
-    "release:major": "release-it --ci --major",
+    "release": "release-it",
+    "release:minor": "release-it --minor",
+    "release:major": "release-it --major",
     "release:patch": "release-it --patch"
   },
   "repository": {
@@ -28,16 +28,16 @@
   "author": "@ededejr",
   "license": "LICENSE",
   "devDependencies": {
-    "@release-it/conventional-changelog": "^3.0.1",
-    "@types/jest": "^27.4.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
-    "eslint": "^7.29.0",
-    "jest": "^27.4.5",
-    "prettier": "^2.6.2",
-    "release-it": "^14.10.0",
-    "ts-jest": "^27.1.2",
-    "typescript": "^4.8.4"
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@types/jest": "^29.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.5",
+    "release-it": "^15.9.0",
+    "ts-jest": "^29.0.5",
+    "typescript": "^5.0.2"
   },
   "release-it": {
     "git": {
@@ -47,7 +47,7 @@
       "tagAnnotation": "Release v${version}"
     },
     "npm": {
-      "publish": false,
+      "publish": true,
       "publishPath": "./build"
     },
     "plugins": {
