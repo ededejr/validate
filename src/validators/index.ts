@@ -128,9 +128,9 @@ export const optional: ValidatorOp = (validatorFn) => (arg) =>
  * @example
  * A simple chain to verify a string is a date.
  * ```ts
- * const isValidDateString = Validators.chainable()
- *  .chain(Validators.string)
- *  .chain(Validators.date);
+ * const isValidDateString = Validators.makeChain()
+ *  .link(Validators.string)
+ *  .link(Validators.date);
  *
  * const isValidDate = isValidDateString('2021-01-01'); // true
  * ```
@@ -139,12 +139,12 @@ export const optional: ValidatorOp = (validatorFn) => (arg) =>
  * Dealing with complex types is also supported via Generics.
  *
  * ```ts
- * const isValidUser = Validators.chainable()
- *  .chain(Validators.object)
- *  .chain<Record<string, unknown>>(obj => obj.hasOwnProperty('name'))
- *  .chain<{ name: string }>(({ name }) => Validators.pattern(/^[a-z]+$/i)(name))
+ * const isValidUser = Validators.makeChain()
+ *  .link(Validators.object)
+ *  .link<Record<string, unknown>>(obj => obj.hasOwnProperty('name'))
+ *  .link<{ name: string }>(({ name }) => Validators.pattern(/^[a-z]+$/i)(name))
  * ```
  */
-export function chainable() {
+export function makeChain() {
   return new ValidationChain();
 }
