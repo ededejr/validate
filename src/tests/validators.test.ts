@@ -207,36 +207,36 @@ describe('Validators', () => {
     });
   });
 
-  describe.only('chain', () => {
+  describe.only('makeChain', () => {
     test('validates a chain', () => {
-      const validator = Validators.chainable()
-        .chain(Validators.string)
-        .chain(Validators.pattern(/[a-z]+@gmail.com$/i));
+      const validator = Validators.makeChain()
+        .link(Validators.string)
+        .link(Validators.pattern(/[a-z]+@gmail.com$/i));
       expect(validator('edede@gmail.com')).toBe(true);
     });
 
     test('validates a chain with typed params', () => {
-      const validator = Validators.chainable()
-        .chain(Validators.string)
+      const validator = Validators.makeChain()
+        .link(Validators.string)
         // at this point I know it's a string
-        .chain<string>((v) => v.length > 10)
-        .chain(
+        .link<string>((v) => v.length > 10)
+        .link(
           Validators.pattern(
             /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/i
           )
         )
-        .chain(Validators.date);
+        .link(Validators.date);
 
       expect(validator('2020-01-01T00:00:00Z')).toBe(true);
       expect(validator('2020-01-01T00:00:00')).toBe(false);
     });
 
     test('complex types', () => {
-      const validator = Validators.chainable()
-        .chain(Validators.arrayOf(Validators.number))
+      const validator = Validators.makeChain()
+        .link(Validators.arrayOf(Validators.number))
         // at this point I know it's a string
-        .chain<number[]>((v) => v.length > 2)
-        .chain<number[]>((v) => v.every((n) => n % 2 === 0));
+        .link<number[]>((v) => v.length > 2)
+        .link<number[]>((v) => v.every((n) => n % 2 === 0));
 
       expect(validator(['string', 'string', 'string', 1, 2, 3])).toBe(false);
       expect(validator(['string', 'string', 1, 2])).toBe(false);

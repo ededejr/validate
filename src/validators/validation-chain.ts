@@ -1,14 +1,14 @@
 import { TypedValidator, ValidatorFn } from './types';
 
 type ChainableValidator<T> = TypedValidator<T> & {
-  chain: <Y>(fn: (arg: Y) => boolean) => ChainableValidator<Y>;
+  link: <Y>(fn: (arg: Y) => boolean) => ChainableValidator<Y>;
 };
 
 export class ValidationChain {
   private head: Node | null = null;
   private tail: Node | null = null;
 
-  public chain<T = unknown, I = unknown>(
+  public link<T = unknown, I = unknown>(
     fn: (arg: I) => boolean
   ): ChainableValidator<T> {
     const node = new Node(fn as ValidatorFn);
@@ -23,7 +23,7 @@ export class ValidationChain {
 
     const call = (arg: unknown): arg is T => this.validate<T>(arg);
     return Object.assign(call, {
-      chain: this.chain.bind(this),
+      link: this.link.bind(this),
     });
   }
 
