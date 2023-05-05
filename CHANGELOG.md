@@ -1,5 +1,18 @@
 
 
+# [0.5.0](https://github.com/ededejr/validate/compare/0.4.0...0.5.0) (2023-05-05)
+
+
+### Bug Fixes
+
+* update BaseTarget to accept interfaces ([289e044](https://github.com/ededejr/validate/commit/289e04478dc6c7c892ef22e1049372faca703bb3))
+
+
+### Features
+
+* better type safety,  nullish and pattern validators ([a93bb51](https://github.com/ededejr/validate/commit/a93bb51bce7ee61835cdcd67f52778fbe9743e7e))
+* chainable validators ([381d68b](https://github.com/ededejr/validate/commit/381d68ba5efcd31db7159700a9f9068271c339d8))
+
 # [0.4.0](https://github.com/ededejr/validate/compare/0.3.0...0.4.0) (2023-03-20)
 
 
