@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "module": "commonjs",
     "lib": ["ESNext", "DOM"],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./build",
     "strict": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
