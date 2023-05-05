@@ -10,9 +10,11 @@ export default function validate<Target extends BaseTarget>(
   target: Target,
   rules: ValidationRuleMap<Target>
 ): boolean {
-  return Object.keys(target).every((property) =>
-    rules[property](target[property] as Target[typeof property])
-  );
+  return Object.keys(target).every((property) => {
+    const rule = rules[property as keyof typeof rules];
+    const field = target[property as keyof typeof target];
+    return rule(field);
+  });
 }
 
 /**
