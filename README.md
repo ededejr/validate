@@ -10,7 +10,9 @@ npm install @ededejr/validate
 
 ## Usage
 
-### Validating an object's shape
+### Validating an object
+
+The provided `validate` function can be used to test a given object against a set of rules.
 
 ```ts
 import { validate } from '@ededejr/validate';
@@ -27,7 +29,11 @@ const isValid = validate(
 ); // true;
 ```
 
-### Reusing ValidationRuleMaps
+This has its uses, but can be somewhat cumbersome to do this for every object.
+
+### Reusing validation rules
+
+Rather than inlining validation rules for an object, we can create a validator which expects a certain object type and reuse it.
 
 ```ts
 import { createObjectValidator } from '@ededejr/validate';
@@ -45,31 +51,9 @@ const validatePerson = createObjectValidator<Person>({
 const isPerson = validatePerson({ name: 'Cole', age: 1 }); // true;
 ```
 
-### Validated Functions
+### Creating functions with validated parameters
 
-```ts
-import { createValidatedFunction, Validators } from '@ededejr/validate';
-
-// Set up our scenario, in this case we'll work with simple coordinates
-type Coordinates = { x: number; y: number };
-type CoordinateOperator<Result = number> = (c: Coordinates) => Result;
-
-// Write a function to print coordinates
-const _print: CoordinateOperator<string> = ({ x, y }) => `(${x}, ${y})`;
-
-const print = createValidatedFunction<Coordinates, ReturnType<typeof _print>>(
-  _print,
-  {
-    x: (x) => x % 2 === 0,
-    y: (y) => `${y}`.includes('1'),
-  }
-);
-
-print({ x: 9, y: 10 }); // Error, 9%2 is not 0
-print({ x: 6, y: 22 }); // Error, 22 as a string does not contain "1"
-```
-
-### Validated functions with provided Validators
+Extending things further, we can create special functions that validate their parameters before executing. This can be ideal for situations where remote execution is permitted, or inputs come over the wire.
 
 ```ts
 import { createValidatedFunction, Validators } from '@ededejr/validate';
@@ -95,9 +79,9 @@ print({ x: 9, y: 10 }); // Success
 print({ x: 9, y: '10' }); // Error
 ```
 
-### Validating Nested Objects
+### Validating deeply nested objects
 
-You can specify how deep your validations could go, even within Objects!
+It is also possible to specify how deep your validations need to go, this is especially useful for nested Objects.
 
 ```ts
 import {
